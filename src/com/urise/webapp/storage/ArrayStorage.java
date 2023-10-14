@@ -12,37 +12,59 @@ public class ArrayStorage {
 
     private int size = 0;
 
-    public void clear() {
+    private int search(String uuid) {
         for (int i = 0; i < size; i++) {
-            storage[i] = null;
+            if (storage[i].getUuid() == uuid) {
+                return i;
+            }
         }
+        return -1;
+    }
+
+    public void clear() {
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
+    public void update(Resume r) {
+        int i = search(r.getUuid());
+        if (i > -1) {
+            storage[i] = r;
+        } else {
+            System.out.println("ERROR: нет резюме c uuid: " + r.getUuid());
+        }
+    }
+
     public void save(Resume r) {
+        if (size == 10000) {
+            System.out.println("ERROR: нет свободного места в хранилище");
+            return;
+        } else if (search(r.getUuid()) > -1) {
+            System.out.println("ERROR: резюме с uuid: " + r.getUuid() + " уже сохранено");
+        }
         storage[size] = r;
         size++;
     }
 
     public Resume get(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                return storage[i];
-            }
+        int i = search(uuid);
+        if (i > -1) {
+            return storage[i];
         }
+        System.out.println("ERROR: нет резюме c uuid: " + uuid);
         return null;
     }
 
     public void delete(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                storage[i] = storage[size - 1];
-                storage[size - 1] = null;
-                size--;
-                break;
-            }
-
+        int i = search(uuid);
+        if (i > -1) {
+            storage[i] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
+        } else {
+            System.out.println("ERROR: нет резюме c uuid: " + uuid);
         }
+
     }
 
     /**
@@ -55,4 +77,5 @@ public class ArrayStorage {
     public int size() {
         return size;
     }
+
 }
