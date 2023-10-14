@@ -14,7 +14,7 @@ public class ArrayStorage {
 
     private int search(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid() == uuid) {
+            if (storage[i].getUuid().equals(uuid)) {
                 return i;
             }
         }
@@ -27,9 +27,9 @@ public class ArrayStorage {
     }
 
     public void update(Resume r) {
-        int i = search(r.getUuid());
-        if (i > -1) {
-            storage[i] = r;
+        int index = search(r.getUuid());
+        if (index > -1) {
+            storage[index] = r;
         } else {
             System.out.println("ERROR: нет резюме c uuid: " + r.getUuid());
         }
@@ -41,24 +41,25 @@ public class ArrayStorage {
             return;
         } else if (search(r.getUuid()) > -1) {
             System.out.println("ERROR: резюме с uuid: " + r.getUuid() + " уже сохранено");
+            return;
         }
         storage[size] = r;
         size++;
     }
 
     public Resume get(String uuid) {
-        int i = search(uuid);
-        if (i > -1) {
-            return storage[i];
+        int index = search(uuid);
+        if (index > -1) {
+            return storage[index];
         }
         System.out.println("ERROR: нет резюме c uuid: " + uuid);
         return null;
     }
 
     public void delete(String uuid) {
-        int i = search(uuid);
-        if (i > -1) {
-            storage[i] = storage[size - 1];
+        int index = search(uuid);
+        if (index > -1) {
+            storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
         } else {
