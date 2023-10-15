@@ -13,22 +13,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
-    }
-
-    @Override
-    public void update(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index > -1) {
-            storage[index] = r;
-        } else {
-            System.out.println("ERROR: нет резюме " + r.getUuid());
-        }
-    }
-
-    @Override
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
         if (index > -1) {
@@ -42,7 +26,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
             storage[-index-1] = r;
             size++;
         }
-
     }
 
     @Override
@@ -59,8 +42,4 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         }
     }
 
-    @Override
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
-    }
 }
