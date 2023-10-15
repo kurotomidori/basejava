@@ -13,18 +13,17 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public void save(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index > -1) {
-            System.out.println("ERROR: резюме " + r.getUuid() + " уже существует");
-        } else if (size >= STORAGE_LIMIT) {
-            System.out.println("ERROR: нет свободного места в хранилище");
-        } else {
-            for (int i = size; i >= -index ; i--) {
-                storage[i] = storage[i-1];
-            }
-            storage[-index-1] = r;
-            size++;
+    protected void insertElement(Resume r, int index) {
+        int insertIdx = -index - 1;
+        System.arraycopy(storage, insertIdx, storage, insertIdx + 1, size - insertIdx);
+        storage[insertIdx] = r;
+    }
+
+    @Override
+    protected void fillDeletedElement(int index) {
+        int numMoved = size - index -1;
+        if (numMoved > 0) {
+            System.arraycopy(storage, index + 1, storage, index, numMoved);
         }
     }
 
@@ -34,9 +33,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         if (index < 0) {
             System.out.println("ERROR: нет резюме " + uuid);
         } else {
-            for (int i = index; i < size; i++) {
-                storage[i] = storage[i+1];
-            }
+
             storage[size - 1] = null;
             size--;
         }
