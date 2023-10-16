@@ -2,6 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exeption.NotExistStorageException;
 import com.urise.webapp.exeption.ExistStorageException;
+import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -16,7 +17,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index > -1) {
             throw new ExistStorageException(r.getUuid());
         } else if (size >= STORAGE_LIMIT) {
-            System.out.println("ERROR: нет свободного места в хранилище");
+            throw new StorageException("Переполнение хранилища", r.getUuid());
         } else {
             insertElement(r, index);
             size++;
@@ -25,7 +26,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (index == -1) {
+        if (index < 0) {
             throw new NotExistStorageException(uuid);
         } else {
             fillDeletedElement(index);

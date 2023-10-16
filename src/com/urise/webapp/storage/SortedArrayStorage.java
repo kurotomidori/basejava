@@ -26,16 +26,4 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         }
     }
 
-    @Override
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            System.out.println("ERROR: нет резюме " + uuid);
-        } else {
-
-            storage[size - 1] = null;
-            size--;
-        }
-    }
-
 }
