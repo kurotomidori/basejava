@@ -6,22 +6,22 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected static final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
     @Override
-    protected void doSave(Resume r, Object key) {
+    protected void doSave(Resume r, Integer key) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Переполнение хранилища", r.getUuid());
         } else {
-            insertElement(r, (Integer) key);
+            insertElement(r, key);
             size++;
         }
     }
     @Override
-   protected void doDelete(Object key) {
-         fillDeletedElement((Integer) key);
+   protected void doDelete(Integer key) {
+         fillDeletedElement(key);
          storage[size - 1] = null;
          size--;
     }
@@ -30,8 +30,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
     @Override
-    protected Resume doGet(Object key) {
-        return storage[(Integer) key];
+    protected Resume doGet(Integer key) {
+        return storage[key];
     }
     @Override
     public void clear() {
@@ -39,8 +39,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
     @Override
-    protected void doUpdate(Resume r, Object key) {
-        storage[(Integer) key] = r;
+    protected void doUpdate(Resume r, Integer key) {
+        storage[key] = r;
 
     }
     @Override
@@ -49,8 +49,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object key) {
-        return (Integer) key >= 0;
+    protected boolean isExist(Integer key) {
+        return key >= 0;
     }
 
     protected abstract void insertElement(Resume r, int index);
