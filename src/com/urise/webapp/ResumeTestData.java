@@ -2,7 +2,7 @@ package com.urise.webapp;
 
 import com.urise.webapp.model.*;
 
-import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,19 +54,46 @@ public class ResumeTestData {
         achievements.add("Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
     }
 
-    public static void makeQualifications(List<String> qualifications) {
+    private static void makeQualifications(List<String> qualifications) {
         qualifications.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2 ");
         qualifications.add("Version control: Subversion, Git, Mercury, ClearCase, Perforce ");
         qualifications.add("DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle, MySQL, SQLite, MS SQL, HSQLDB ");
     }
 
-    public static void makeOrganisationsWork(List<Organisation> organisationsWork){
-        organisationsWork.add(new Organisation("Java Online Projects","http://javaops.ru/","Автор проекта.","Создание, организация и проведение Java онлайн проектов и стажировок.", LocalDate.parse("2013-10-01"), null));
-        organisationsWork.add(new Organisation("Wrike","https://www.wrike.com/","Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.",LocalDate.parse("2014-10-01"), LocalDate.parse("2016-01-01")));
+    private static void makeOrganisationsWork(List<Organisation> organisationsWork){
+        organisationsWork.add(new Organisation("Java Online Projects","http://javaops.ru/", new Organisation.Position("Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок.", 2013, Month.DECEMBER)));
+        organisationsWork.add(new Organisation("Wrike","https://www.wrike.com/", new Organisation.Position("Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.", 2014, Month.OCTOBER, 2016, Month.JANUARY)));
     }
 
-    public static void makeOrganisationsEdu(List<Organisation> organisationsEducation) {
-        organisationsEducation.add(new Organisation("Coursera","https://www.coursera.org/course/progfun","'Functional Programming Principles in Scala' by Martin Odersky","",LocalDate.parse("2013-03-01"),LocalDate.parse("2013-05-01")));
-        organisationsEducation.add(new Organisation("Luxoft","http://www.luxoft-training.ru/training/catalog/course.html?ID=22366","Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.'","",LocalDate.parse("2011-03-01"),LocalDate.parse("2011-04-01")));
+    private static void makeOrganisationsEdu(List<Organisation> organisationsEducation) {
+        organisationsEducation.add(new Organisation("Coursera","https://www.coursera.org/course/progfun",new Organisation.Position("'Functional Programming Principles in Scala' by Martin Odersky","", 2013, Month.MARCH, 2013, Month.MAY)));
+        organisationsEducation.add(new Organisation("Luxoft","http://www.luxoft-training.ru/training/catalog/course.html?ID=22366",new Organisation.Position("Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.'","", 2011, Month.MARCH, 2011, Month.APRIL)));
+        organisationsEducation.add(new Organisation("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики","https://itmo.ru/",new Organisation.Position("Аспирантура (программист С, С++)", "", 1993, Month.SEPTEMBER, 1996, Month.JULY), new Organisation.Position("Инженер (программист Fortran, C)", "", 1987, Month.SEPTEMBER, 1993, Month.JULY)));
+    }
+
+    public static Resume makeTestResume(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
+        List<String> achievements = new ArrayList<>();
+        makeAchievements(achievements);
+        List<String> qualifications = new ArrayList<>();
+        makeQualifications(qualifications);
+        List<Organisation> organisationsWork = new ArrayList<>();
+        makeOrganisationsWork(organisationsWork);
+        List<Organisation> organisationsEducation = new ArrayList<>();
+        makeOrganisationsEdu(organisationsEducation);
+        resume.setContact(ContactType.TELEPHONE, new Contact("+7(921) 855-0482"));
+        resume.setContact(ContactType.SKYPE, new Contact("skype:grigory.kislin"));
+        resume.setContact(ContactType.EMAIL, new Contact("gkislin@yandex.ru"));
+        resume.setContact(ContactType.LINKED_IN, new Contact("https://www.linkedin.com/in/gkislin"));
+        resume.setContact(ContactType.GIT_HUB, new Contact("https://github.com/gkislin"));
+        resume.setContact(ContactType.STACKOVERFLOW, new Contact("https://stackoverflow.com/users/548473"));
+        resume.setContact(ContactType.HOMEPAGE, new Contact("http://gkislin.ru/"));
+        resume.setSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
+        resume.setSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
+        resume.setSection(SectionType.ACHIEVEMENT, new ListSection(achievements));
+        resume.setSection(SectionType.QUALIFICATIONS, new ListSection(qualifications));
+        resume.setSection(SectionType.EXPERIENCE, new OrganisationsListSection(organisationsWork));
+        resume.setSection(SectionType.EDUCATION, new OrganisationsListSection(organisationsEducation));
+        return resume;
     }
 }

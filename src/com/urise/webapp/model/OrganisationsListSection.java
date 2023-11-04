@@ -1,11 +1,10 @@
 package com.urise.webapp.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class OrganisationsListSection extends Section<List<Organisation>>{
-    private List<Organisation> organisations = new ArrayList<>();
+    private List<Organisation> organisations;
 
     public OrganisationsListSection(List<Organisation> organisations) {
         Objects.requireNonNull(organisations, "organisations must not be null");

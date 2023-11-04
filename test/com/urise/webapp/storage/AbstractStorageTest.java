@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.ResumeTestData;
 import com.urise.webapp.exeption.NotExistStorageException;
 import com.urise.webapp.exeption.ExistStorageException;
 import com.urise.webapp.model.Resume;
@@ -28,10 +29,10 @@ public class AbstractStorageTest {
     private static final Resume RESUME_4;
 
     static {
-        RESUME_1 = new Resume(UUID_1, FULL_NAME_1);
-        RESUME_2 = new Resume(UUID_2, FULL_NAME_2);
-        RESUME_3 = new Resume(UUID_3, FULL_NAME_3);
-        RESUME_4 = new Resume(UUID_4, FULL_NAME_4);
+        RESUME_1 = ResumeTestData.makeTestResume(UUID_1, FULL_NAME_1);
+        RESUME_2 = ResumeTestData.makeTestResume(UUID_2, FULL_NAME_2);
+        RESUME_3 = ResumeTestData.makeTestResume(UUID_3, FULL_NAME_3);
+        RESUME_4 = ResumeTestData.makeTestResume(UUID_4, FULL_NAME_4);
     }
 
 
@@ -43,9 +44,9 @@ public class AbstractStorageTest {
     @Before
     public void setUp() throws Exception {
         storage.clear();
-        storage.save(new Resume(UUID_1, FULL_NAME_1));
-        storage.save(new Resume(UUID_2, FULL_NAME_2));
-        storage.save(new Resume(UUID_3, FULL_NAME_3));
+        storage.save(ResumeTestData.makeTestResume(UUID_1, FULL_NAME_1));
+        storage.save(ResumeTestData.makeTestResume(UUID_2, FULL_NAME_2));
+        storage.save(ResumeTestData.makeTestResume(UUID_3, FULL_NAME_3));
     }
 
     @Test

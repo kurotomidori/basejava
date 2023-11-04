@@ -1,23 +1,24 @@
 package com.urise.webapp.model;
 
+import com.urise.webapp.util.DateUtil;
+
 import java.time.LocalDate;
+import java.time.Month;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Organisation {
     private String organisationName;
     private String organisationUrl;
-    private String position;
-    private String content;
-    private LocalDate beginDate;
-    private LocalDate endDate;
+    private List<Position> positions;
 
-    public Organisation(String organisationName, String organisationUrl, String position, String content, LocalDate beginDate, LocalDate endDate) {
+    public Organisation(String organisationName, String organisationUrl, Position... positions) {
+        Objects.requireNonNull(organisationName, "organisationName must mor be null");
+        Objects.requireNonNull(positions, "position must mor be null");
         this.organisationName = organisationName;
         this.organisationUrl = organisationUrl;
-        this.position = position;
-        this.content = content;
-        this.beginDate = beginDate;
-        this.endDate = endDate;
+        this.positions = Arrays.asList(positions);
     }
 
     public String getOrganisationName() {
@@ -28,20 +29,17 @@ public class Organisation {
         return organisationUrl;
     }
 
-    public String getPosition() {
-        return position;
+    public List<Position> getPositions() {
+        return positions;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public LocalDate getBeginDate() {
-        return beginDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
+    @Override
+    public String toString() {
+        return "Organisation{" +
+                "organisationName='" + organisationName + '\'' +
+                ", organisationUrl='" + organisationUrl + '\'' +
+                ", positions=" + positions +
+                '}';
     }
 
     @Override
@@ -49,16 +47,56 @@ public class Organisation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organisation that = (Organisation) o;
-        return Objects.equals(organisationName, that.organisationName) && Objects.equals(organisationUrl, that.organisationUrl) && Objects.equals(position, that.position) && Objects.equals(content, that.content) && Objects.equals(beginDate, that.beginDate) && Objects.equals(endDate, that.endDate);
+        return Objects.equals(organisationName, that.organisationName) && Objects.equals(organisationUrl, that.organisationUrl) && Objects.equals(positions, that.positions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(organisationName, organisationUrl, position, content, beginDate, endDate);
+        return Objects.hash(organisationName, organisationUrl, positions);
     }
 
-    @Override
-    public String toString() {
-        return "\n" + organisationName + "\n" + organisationUrl + "\n" + position + "\n" + content + beginDate + " - " + endDate;
+    public static class Position {
+        private String position;
+        private String description;
+        private LocalDate beginDate;
+        private  LocalDate endDate;
+
+        public Position(String position, String description, LocalDate beginDate, LocalDate endDate) {
+            this.position = position;
+            this.description = description;
+            this.beginDate = beginDate;
+            this.endDate = endDate;
+        }
+
+        public Position(String position, String description, int beginYear, Month beginMonth, int endYear, Month endMonth) {
+            this(position, description, DateUtil.of(beginYear, beginMonth), DateUtil.of(endYear, endMonth));
+        }
+
+        public Position(String position, String description, int beginYear, Month beginMonth) {
+            this(position, description, DateUtil.of(beginYear, beginMonth), DateUtil.NOW);
+        }
+
+        @Override
+        public String toString() {
+            return "Position{" +
+                    "position='" + position + '\'' +
+                    ", description='" + description + '\'' +
+                    ", beginDate=" + beginDate +
+                    ", endDate=" + endDate +
+                    '}';
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Position position1 = (Position) o;
+            return Objects.equals(position, position1.position) && Objects.equals(description, position1.description) && Objects.equals(beginDate, position1.beginDate) && Objects.equals(endDate, position1.endDate);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(position, description, beginDate, endDate);
+        }
     }
 }
