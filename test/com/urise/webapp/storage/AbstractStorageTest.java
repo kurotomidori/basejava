@@ -8,9 +8,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.List;
 
 public class AbstractStorageTest {
+    protected static final String STORAGE_DIR = ".\\storage";
     protected Storage storage;
 
     private static final String UUID_1 = "uuid1";

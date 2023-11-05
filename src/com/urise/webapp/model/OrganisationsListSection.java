@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class OrganisationsListSection extends Section<List<Organisation>>{
+    private static final long serialVersionUID = 1L;
     private List<Organisation> organisations;
 
     public OrganisationsListSection(List<Organisation> organisations) {
