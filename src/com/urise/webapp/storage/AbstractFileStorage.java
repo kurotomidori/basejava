@@ -26,10 +26,10 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected void doSave(Resume r, File key) {
         try {
             key.createNewFile();
-            doWrite(r, key);
         } catch (IOException e) {
-            throw new StorageException("IO error", key.getName(), e);
+            throw new StorageException("Couldn't create new file " + key.getAbsolutePath(), key.getName(), e);
         }
+        doUpdate(r, key);
     }
 
     @Override
@@ -42,11 +42,19 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected abstract Resume doGet(File key);
+    protected Resume doGet(File key) {
+        try{
+            return doRead(key);
+        } catch (IOException e) {
+            throw new StorageException("Can't read a file " + key.getAbsolutePath(), key.getName(), e);
+        }
+    }
 
     @Override
     protected void doDelete(File key) {
-        key.delete();
+        if(!key.delete()) {
+            throw new StorageException("File delete error", key.getName());
+        }
     }
 
     @Override
@@ -76,15 +84,20 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         File[] files = directory.listFiles();
         if(files != null) {
             for (File file : files) {
-                file.delete();
+                doDelete(file);
             }
         }
     }
 
     @Override
     public int size() {
-        return directory.listFiles().length;
+        String[] list = directory.list();
+        if(list == null) {
+            throw new StorageException("Directory read error", null);
+        }
+        return list.length;
     }
 
     protected abstract void doWrite(Resume r, File file) throws IOException;
+    protected abstract Resume doRead(File file) throws IOException;
 }

@@ -1,11 +1,15 @@
 package com.urise.webapp.model;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class ListSection extends Section<List<String>>{
-    private List<String> content = new ArrayList<>();
+    private final List<String> content;
+
+    public ListSection(String... text) {
+        this(Arrays.asList(text));
+    }
 
     public ListSection(List<String> content) {
         Objects.requireNonNull(content, "content must not be null");

@@ -30,24 +30,21 @@ public class MainFile {
             throw new RuntimeException(e);
         }
 
-        printFile(".\\");
+        printFile(dir);
     }
 
-    private static void printFile(String path) {
-        File tempDir = new File(path);
-        if(tempDir.isDirectory()) {
-            String[] list = tempDir.list();
+    private static void printFile(File path) {
+        if(path.isDirectory()) {
+            System.out.println("Directory: " + path.getName());
+            File[] list = path.listFiles();
             if (list != null) {
-                for(String name : list) {
-                    if (path.equals(".\\")) {
-                        printFile(path + name);
-                    } else {
-                        printFile(path + "\\" + name);
-                    }
+                for(File name : list) {
+                    printFile(name);
                 }
+                System.out.println();
             }
         } else {
-            System.out.println(tempDir.getName());
+            System.out.println("File: " + path.getName());
         }
     }
 }
