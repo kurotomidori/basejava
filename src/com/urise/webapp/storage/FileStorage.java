@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.serialization.Serializator;
 import com.urise.webapp.exeption.StorageException;
 import com.urise.webapp.model.Resume;
 
@@ -8,13 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
+public class FileStorage extends AbstractStorage<File> {
     private File directory;
-    protected abstract void doWrite(Resume r, OutputStream os) throws IOException;
-    protected abstract Resume doRead(InputStream is) throws IOException;
+    private Serializator serializator;
 
-    protected AbstractFileStorage(File directory) {
+    public void setSerialization(Serializator serializator) {
+        this.serializator = serializator;
+    }
+
+    public FileStorage(File directory, Serializator serializator) {
         Objects.requireNonNull(directory, "directory must not be null");
+        Objects.requireNonNull(serializator, "serialization must not be null");
+        this.serializator = serializator;
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
         }
@@ -36,7 +42,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void doUpdate(Resume r, File key) {
         try {
-            doWrite(r, new BufferedOutputStream(new FileOutputStream(key)));
+            serializator.doWrite(r, new BufferedOutputStream(new FileOutputStream(key)));
         } catch (IOException e) {
             throw new StorageException("IO error", key.getName(), e);
         }
@@ -45,7 +51,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected Resume doGet(File key) {
         try{
-            return doRead(new BufferedInputStream(new FileInputStream(key)));
+            return serializator.doRead(new BufferedInputStream(new FileInputStream(key)));
         } catch (IOException e) {
             throw new StorageException("Can't read a file " + key.getAbsolutePath(), key.getName(), e);
         }
