@@ -7,6 +7,9 @@ public class OrganisationsListSection extends Section<List<Organisation>>{
     private static final long serialVersionUID = 1L;
     private List<Organisation> organisations;
 
+    public OrganisationsListSection() {
+    }
+
     public OrganisationsListSection(List<Organisation> organisations) {
         Objects.requireNonNull(organisations, "organisations must not be null");
         this.organisations = organisations;

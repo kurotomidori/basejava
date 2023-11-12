@@ -1,5 +1,8 @@
 package com.urise.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.Objects;
@@ -8,11 +11,13 @@ import java.util.UUID;
 /**
  * Initial resume class
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Resume implements Serializable {
     private static final long serialVersionUID = 1L;
     private final EnumMap<SectionType, Section<?>> sections = new EnumMap<>(SectionType.class);
     private final EnumMap<ContactType, Contact> contacts = new EnumMap<>(ContactType.class);
-    private final String uuid;
+    private String uuid;
 
     private String fullName;
 
@@ -30,6 +35,9 @@ public class Resume implements Serializable {
 
     public Contact getContact(ContactType contactType) {
         return contacts.get(contactType);
+    }
+
+    public Resume() {
     }
 
     public Resume(String fullName) {
@@ -66,14 +74,11 @@ public class Resume implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resume resume = (Resume) o;
-        if(!uuid.equals(resume.uuid)) {
-            return false;
-        }
-        return fullName.equals(resume.fullName);
+        return Objects.equals(sections, resume.sections) && Objects.equals(contacts, resume.contacts) && Objects.equals(uuid, resume.uuid) && Objects.equals(fullName, resume.fullName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, fullName);
+        return Objects.hash(sections, contacts, uuid, fullName);
     }
 }
