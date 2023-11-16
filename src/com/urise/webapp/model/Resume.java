@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.EnumMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -15,8 +16,9 @@ import java.util.UUID;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Resume implements Serializable {
     private static final long serialVersionUID = 1L;
-    private final EnumMap<SectionType, Section<?>> sections = new EnumMap<>(SectionType.class);
-    private final EnumMap<ContactType, Contact> contacts = new EnumMap<>(ContactType.class);
+
+    private final Map<SectionType, Section<?>> sections = new EnumMap<>(SectionType.class);
+    private final Map<ContactType, Contact> contacts = new EnumMap<>(ContactType.class);
     private String uuid;
 
     private String fullName;
@@ -27,6 +29,15 @@ public class Resume implements Serializable {
 
     public void setContact(ContactType contactType, Contact data) {
         contacts.put(contactType, data);
+    }
+
+
+    public Map<SectionType, Section<?>> getSections() {
+        return sections;
+    }
+
+    public Map<ContactType, Contact> getContacts() {
+        return contacts;
     }
 
     public Section<?> getSection(SectionType sectionType) {

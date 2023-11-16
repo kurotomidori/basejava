@@ -31,6 +31,14 @@ public class Organisation implements Serializable {
         this.positions = Arrays.asList(positions);
     }
 
+    public Organisation(String organisationName, String organisationUrl, List<Position> positions) {
+        Objects.requireNonNull(organisationName, "organisationName must mor be null");
+        Objects.requireNonNull(positions, "position must mor be null");
+        this.organisationName = organisationName;
+        this.organisationUrl = organisationUrl;
+        this.positions = positions;
+    }
+
     public String getOrganisationName() {
         return organisationName;
     }
@@ -82,6 +90,22 @@ public class Organisation implements Serializable {
             this.description = description;
             this.beginDate = beginDate;
             this.endDate = endDate;
+        }
+
+        public String getPosition() {
+            return position;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public LocalDate getBeginDate() {
+            return beginDate;
+        }
+
+        public LocalDate getEndDate() {
+            return endDate;
         }
 
         public Position(String position, String description, int beginYear, Month beginMonth, int endYear, Month endMonth) {

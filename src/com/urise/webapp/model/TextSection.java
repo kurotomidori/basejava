@@ -30,4 +30,9 @@ public class TextSection extends Section<String>{
     public int hashCode() {
         return Objects.hash(content);
     }
+
+    @Override
+    public String toString() {
+        return content;
+    }
 }
