@@ -5,7 +5,7 @@ import com.urise.webapp.serialization.XmlStreamSerializer;
 
 public class DataStreamPathStorageTest extends AbstractStorageTest{
     public DataStreamPathStorageTest() {
-        super(new PathStorage(STORAGE_DIR, new DataStreamSerializer()));
+        super(new PathStorage(STORAGE_DIR.getAbsolutePath(), new DataStreamSerializer()));
 
     }
 }

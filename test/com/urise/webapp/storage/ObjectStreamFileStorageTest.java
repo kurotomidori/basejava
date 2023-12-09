@@ -6,6 +6,6 @@ import java.io.File;
 
 public class ObjectStreamFileStorageTest extends AbstractStorageTest {
     public ObjectStreamFileStorageTest() {
-        super(new FileStorage(new File(STORAGE_DIR), new ObjectStream()));
+        super(new FileStorage(new File(STORAGE_DIR.getAbsolutePath()), new ObjectStream()));
     }
 }
