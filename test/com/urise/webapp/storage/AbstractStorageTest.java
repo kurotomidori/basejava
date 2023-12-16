@@ -1,7 +1,6 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.Config;
-import com.urise.webapp.ResumeTestData;
 import com.urise.webapp.exeption.NotExistStorageException;
 import com.urise.webapp.exeption.ExistStorageException;
 import com.urise.webapp.model.Resume;
@@ -11,17 +10,18 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 public class AbstractStorageTest {
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
     protected Storage storage;
 
-    private static final String UUID_1 = "uuid1";
+    private static final String UUID_1 = UUID.randomUUID().toString();
 
-    private static final String UUID_2 = "uuid2";
+    private static final String UUID_2 = UUID.randomUUID().toString();
 
-    private static final String UUID_3 = "uuid3";
-    private static final String UUID_4 = "uuid4";
+    private static final String UUID_3 = UUID.randomUUID().toString();
+    private static final String UUID_4 = UUID.randomUUID().toString();
     private static final String FULL_NAME_1 = "fullName1";
     private static final String FULL_NAME_2 = "fullName2";
     private static final String FULL_NAME_3 = "fullName3";
@@ -32,10 +32,15 @@ public class AbstractStorageTest {
     private static final Resume RESUME_4;
 
     static {
-        RESUME_1 = ResumeTestData.makeTestResume(UUID_1, FULL_NAME_1);
+       /* RESUME_1 = ResumeTestData.makeTestResume(UUID_1, FULL_NAME_1);
         RESUME_2 = ResumeTestData.makeTestResume(UUID_2, FULL_NAME_2);
         RESUME_3 = ResumeTestData.makeTestResume(UUID_3, FULL_NAME_3);
-        RESUME_4 = ResumeTestData.makeTestResume(UUID_4, FULL_NAME_4);
+        RESUME_4 = ResumeTestData.makeTestResume(UUID_4, FULL_NAME_4);*/
+        RESUME_1 = new Resume(UUID_1, FULL_NAME_1);
+        RESUME_2 = new Resume(UUID_2, FULL_NAME_2);
+        RESUME_3 = new Resume(UUID_3, FULL_NAME_3);
+        RESUME_4 = new Resume(UUID_4, FULL_NAME_4);
+
     }
 
 
@@ -47,9 +52,12 @@ public class AbstractStorageTest {
     @Before
     public void setUp() throws Exception {
         storage.clear();
-        storage.save(ResumeTestData.makeTestResume(UUID_1, FULL_NAME_1));
+       /* storage.save(ResumeTestData.makeTestResume(UUID_1, FULL_NAME_1));
         storage.save(ResumeTestData.makeTestResume(UUID_2, FULL_NAME_2));
-        storage.save(ResumeTestData.makeTestResume(UUID_3, FULL_NAME_3));
+        storage.save(ResumeTestData.makeTestResume(UUID_3, FULL_NAME_3));*/
+        storage.save(new Resume(UUID_1, FULL_NAME_1));
+        storage.save(new Resume(UUID_2, FULL_NAME_2));
+        storage.save(new Resume(UUID_3, FULL_NAME_3));
     }
 
     @Test
