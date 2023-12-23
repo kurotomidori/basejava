@@ -4,6 +4,8 @@ import com.urise.webapp.Config;
 import com.urise.webapp.exeption.NotExistStorageException;
 import com.urise.webapp.exeption.ExistStorageException;
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.model.Contact;
+import com.urise.webapp.model.ContactType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,6 +43,12 @@ public class AbstractStorageTest {
         RESUME_3 = new Resume(UUID_3, FULL_NAME_3);
         RESUME_4 = new Resume(UUID_4, FULL_NAME_4);
 
+        RESUME_1.setContact(ContactType.EMAIL,  new Contact("mail1@ya.ru"));
+        RESUME_1.setContact(ContactType.TELEPHONE,  new Contact("11111"));
+
+        RESUME_4.setContact(ContactType.TELEPHONE,  new Contact("44444"));
+        RESUME_4.setContact(ContactType.SKYPE,  new Contact("Skype"));
+
     }
 
 
@@ -55,9 +63,9 @@ public class AbstractStorageTest {
        /* storage.save(ResumeTestData.makeTestResume(UUID_1, FULL_NAME_1));
         storage.save(ResumeTestData.makeTestResume(UUID_2, FULL_NAME_2));
         storage.save(ResumeTestData.makeTestResume(UUID_3, FULL_NAME_3));*/
-        storage.save(new Resume(UUID_1, FULL_NAME_1));
-        storage.save(new Resume(UUID_2, FULL_NAME_2));
-        storage.save(new Resume(UUID_3, FULL_NAME_3));
+        storage.save(RESUME_1);
+        storage.save(RESUME_2);
+        storage.save(RESUME_3);
     }
 
     @Test
@@ -104,8 +112,11 @@ public class AbstractStorageTest {
 
     @Test
     public void update() throws Exception {
-        storage.update(RESUME_2);
-        Assert.assertEquals(RESUME_2, storage.get(UUID_2));
+        Resume newResume = new Resume(UUID_1, FULL_NAME_1);
+        newResume.setContact(ContactType.EMAIL, new Contact("mail1@gmail.rum"));
+        newResume.setContact(ContactType.SKYPE, new Contact("pushistik777"));
+        storage.update(newResume);
+        Assert.assertEquals(newResume, storage.get(UUID_1));
 
     }
 
