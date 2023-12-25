@@ -1,11 +1,10 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.Config;
+import com.urise.webapp.ResumeTestData;
 import com.urise.webapp.exeption.NotExistStorageException;
 import com.urise.webapp.exeption.ExistStorageException;
-import com.urise.webapp.model.Resume;
-import com.urise.webapp.model.Contact;
-import com.urise.webapp.model.ContactType;
+import com.urise.webapp.model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,8 +23,8 @@ public class AbstractStorageTest {
 
     private static final String UUID_3 = UUID.randomUUID().toString();
     private static final String UUID_4 = UUID.randomUUID().toString();
-    private static final String FULL_NAME_1 = "fullName1";
-    private static final String FULL_NAME_2 = "fullName2";
+    private static final String FULL_NAME_1 = "fullName2";
+    private static final String FULL_NAME_2 = "fullName1";
     private static final String FULL_NAME_3 = "fullName3";
     private static final String FULL_NAME_4 = "fullName4";
     private static final Resume RESUME_1;
@@ -34,10 +33,11 @@ public class AbstractStorageTest {
     private static final Resume RESUME_4;
 
     static {
-       /* RESUME_1 = ResumeTestData.makeTestResume(UUID_1, FULL_NAME_1);
+        RESUME_1 = ResumeTestData.makeTestResume(UUID_1, FULL_NAME_1);
         RESUME_2 = ResumeTestData.makeTestResume(UUID_2, FULL_NAME_2);
         RESUME_3 = ResumeTestData.makeTestResume(UUID_3, FULL_NAME_3);
-        RESUME_4 = ResumeTestData.makeTestResume(UUID_4, FULL_NAME_4);*/
+        RESUME_4 = ResumeTestData.makeTestResume(UUID_4, FULL_NAME_4);
+        /*
         RESUME_1 = new Resume(UUID_1, FULL_NAME_1);
         RESUME_2 = new Resume(UUID_2, FULL_NAME_2);
         RESUME_3 = new Resume(UUID_3, FULL_NAME_3);
@@ -47,7 +47,7 @@ public class AbstractStorageTest {
         RESUME_1.setContact(ContactType.TELEPHONE,  new Contact("11111"));
 
         RESUME_4.setContact(ContactType.TELEPHONE,  new Contact("44444"));
-        RESUME_4.setContact(ContactType.SKYPE,  new Contact("Skype"));
+        RESUME_4.setContact(ContactType.SKYPE,  new Contact("Skype"));*/
 
     }
 
@@ -60,12 +60,12 @@ public class AbstractStorageTest {
     @Before
     public void setUp() throws Exception {
         storage.clear();
-       /* storage.save(ResumeTestData.makeTestResume(UUID_1, FULL_NAME_1));
+        storage.save(ResumeTestData.makeTestResume(UUID_1, FULL_NAME_1));
         storage.save(ResumeTestData.makeTestResume(UUID_2, FULL_NAME_2));
-        storage.save(ResumeTestData.makeTestResume(UUID_3, FULL_NAME_3));*/
-        storage.save(RESUME_1);
+        storage.save(ResumeTestData.makeTestResume(UUID_3, FULL_NAME_3));
+        /*storage.save(RESUME_1);
         storage.save(RESUME_2);
-        storage.save(RESUME_3);
+        storage.save(RESUME_3);*/
     }
 
     @Test
@@ -115,6 +115,7 @@ public class AbstractStorageTest {
         Resume newResume = new Resume(UUID_1, FULL_NAME_1);
         newResume.setContact(ContactType.EMAIL, new Contact("mail1@gmail.rum"));
         newResume.setContact(ContactType.SKYPE, new Contact("pushistik777"));
+        newResume.setSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
         storage.update(newResume);
         Assert.assertEquals(newResume, storage.get(UUID_1));
 
@@ -129,8 +130,8 @@ public class AbstractStorageTest {
     public void getAllSorted() throws Exception {
         List<Resume> testStorage = storage.getAllSorted();
         Assert.assertEquals(storage.size(), testStorage.size());
-        Assert.assertEquals(RESUME_1, testStorage.get(0));
-        Assert.assertEquals(RESUME_2, testStorage.get(1));
+        Assert.assertEquals(RESUME_2, testStorage.get(0));
+        Assert.assertEquals(RESUME_1, testStorage.get(1));
         Assert.assertEquals(RESUME_3, testStorage.get(2));
     }
 
