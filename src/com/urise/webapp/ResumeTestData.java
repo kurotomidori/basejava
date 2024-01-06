@@ -28,8 +28,8 @@ public class ResumeTestData {
         resume.setSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
         resume.setSection(SectionType.ACHIEVEMENT, new ListSection(achievements));
         resume.setSection(SectionType.QUALIFICATIONS, new ListSection(qualifications));
-        //resume.setSection(SectionType.EXPERIENCE, new OrganisationsListSection(organisationsWork));
-        //resume.setSection(SectionType.EDUCATION, new OrganisationsListSection(organisationsEducation));
+        resume.setSection(SectionType.EXPERIENCE, new OrganisationsListSection(organisationsWork));
+        resume.setSection(SectionType.EDUCATION, new OrganisationsListSection(organisationsEducation));
 
         System.out.println(resume.getFullName());
         for (ContactType type : ContactType.values()) {
@@ -92,8 +92,8 @@ public class ResumeTestData {
         resume.setSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
         resume.setSection(SectionType.ACHIEVEMENT, new ListSection(achievements));
         resume.setSection(SectionType.QUALIFICATIONS, new ListSection(qualifications));
-        //resume.setSection(SectionType.EXPERIENCE, new OrganisationsListSection(organisationsWork));
-        //resume.setSection(SectionType.EDUCATION, new OrganisationsListSection(organisationsEducation));
+        resume.setSection(SectionType.EXPERIENCE, new OrganisationsListSection(organisationsWork));
+        resume.setSection(SectionType.EDUCATION, new OrganisationsListSection(organisationsEducation));
         return resume;
     }
 }
