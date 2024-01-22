@@ -16,6 +16,16 @@ import java.util.UUID;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Resume implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static final Resume EMPTY = new Resume();
+
+    static {
+        EMPTY.setSection(SectionType.OBJECTIVE, TextSection.EMPTY);
+        EMPTY.setSection(SectionType.PERSONAL, TextSection.EMPTY);
+        EMPTY.setSection(SectionType.ACHIEVEMENT, ListSection.EMPTY);
+        EMPTY.setSection(SectionType.QUALIFICATIONS, ListSection.EMPTY);
+        EMPTY.setSection(SectionType.EDUCATION, new OrganisationsListSection(Organisation.EMPTY));
+        EMPTY.setSection(SectionType.EXPERIENCE, new OrganisationsListSection(Organisation.EMPTY));
+    }
 
     private final Map<SectionType, Section<?>> sections = new EnumMap<>(SectionType.class);
     private final Map<ContactType, Contact> contacts = new EnumMap<>(ContactType.class);

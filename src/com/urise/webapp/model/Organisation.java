@@ -15,6 +15,7 @@ import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organisation implements Serializable {
+    public static final Organisation EMPTY = new Organisation("","", Position.EMPTY);
     private static final long serialVersionUID = 1L;
     private String organisationName;
     private String organisationUrl;
@@ -24,16 +25,16 @@ public class Organisation implements Serializable {
     }
 
     public Organisation(String organisationName, String organisationUrl, Position... positions) {
-        Objects.requireNonNull(organisationName, "organisationName must mor be null");
-        Objects.requireNonNull(positions, "position must mor be null");
+        Objects.requireNonNull(organisationName, "organisationName must not be null");
+        Objects.requireNonNull(positions, "position must not be null");
         this.organisationName = organisationName;
         this.organisationUrl = organisationUrl;
         this.positions = Arrays.asList(positions);
     }
 
     public Organisation(String organisationName, String organisationUrl, List<Position> positions) {
-        Objects.requireNonNull(organisationName, "organisationName must mor be null");
-        Objects.requireNonNull(positions, "position must mor be null");
+        Objects.requireNonNull(organisationName, "organisationName must not be null");
+        Objects.requireNonNull(positions, "position must not be null");
         this.organisationName = organisationName;
         this.organisationUrl = organisationUrl;
         this.positions = positions;
@@ -75,6 +76,7 @@ public class Organisation implements Serializable {
 
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
+        public static final Position EMPTY = new Position();
         private String position;
         private String description;
         @XmlJavaTypeAdapter(LocalDateAdapter.class)

@@ -1,5 +1,6 @@
 package com.urise.webapp.model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,6 +9,10 @@ public class OrganisationsListSection extends Section<List<Organisation>>{
     private List<Organisation> organisations;
 
     public OrganisationsListSection() {
+    }
+
+    public OrganisationsListSection(Organisation... org) {
+        this(Arrays.asList(org));
     }
 
     public OrganisationsListSection(List<Organisation> organisations) {
